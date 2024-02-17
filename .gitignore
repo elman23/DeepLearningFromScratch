@@ -12,4 +12,7 @@
 
 *.pt
 *ubyte
-  
+
+.venv/
+.virtual_documents/
+

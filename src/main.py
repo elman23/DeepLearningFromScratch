@@ -39,10 +39,10 @@ dl = NeuralNetwork(
 )
 
 
-boston = fetch_california_housing()
-data = boston.data
-target = boston.target
-features = boston.feature_names
+california = fetch_california_housing()
+data = california.data
+target = california.target
+features = california.feature_names
 
 
 # Scaling the data

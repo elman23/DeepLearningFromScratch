@@ -1,5 +1,5 @@
-from numpy import ndarray
 import numpy as np
+from numpy import ndarray
 
 
 def assert_same_shape(array: ndarray,

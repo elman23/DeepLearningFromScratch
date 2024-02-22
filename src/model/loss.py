@@ -1,6 +1,6 @@
-from numpy import ndarray
 import numpy as np
 from model.utils import assert_same_shape
+from numpy import ndarray
 
 
 class Loss(object):
@@ -46,7 +46,7 @@ class Loss(object):
         Every subclass of "Loss" must implement the _input_grad function.
         '''
         raise NotImplementedError()
-    
+
 
 class MeanSquaredError(Loss):
 
@@ -59,8 +59,8 @@ class MeanSquaredError(Loss):
         Computes the per-observation squared error loss
         '''
         loss = (
-            np.sum(np.power(self.prediction - self.target, 2)) / 
-            self.prediction.shape[0]
+                np.sum(np.power(self.prediction - self.target, 2)) /
+                self.prediction.shape[0]
         )
 
         return loss
@@ -68,8 +68,6 @@ class MeanSquaredError(Loss):
     def _input_grad(self) -> ndarray:
         '''
         Computes the loss gradient with respect to the input for MSE loss
-        '''        
+        '''
 
         return 2.0 * (self.prediction - self.target) / self.prediction.shape[0]
-    
-    

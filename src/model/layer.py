@@ -1,10 +1,9 @@
-import numpy as np
-from numpy import ndarray
-
 from typing import List
 
-from model.utils import assert_same_shape
+import numpy as np
 from model.operation import Operation, ParamOperation, Sigmoid, WeightMultiply, BiasAdd
+from model.utils import assert_same_shape
+from numpy import ndarray
 
 
 class Layer(object):
@@ -32,7 +31,7 @@ class Layer(object):
     def forward(self, input_: ndarray) -> ndarray:
         '''
         Passes input forward through a series of operations
-        ''' 
+        '''
         if self.first:
             self._setup_layer(input_)
             self.first = False
@@ -40,7 +39,6 @@ class Layer(object):
         self.input_ = input_
 
         for operation in self.operations:
-
             input_ = operation.forward(input_)
 
         self.output = input_
@@ -59,7 +57,7 @@ class Layer(object):
             output_grad = operation.backward(output_grad)
 
         input_grad = output_grad
-        
+
         self._param_grads()
 
         return input_grad
@@ -83,12 +81,13 @@ class Layer(object):
         for operation in self.operations:
             if issubclass(operation.__class__, ParamOperation):
                 self.params.append(operation.param)
-                
-                
+
+
 class Dense(Layer):
     '''
     A fully connected layer which inherits from "Layer"
     '''
+
     def __init__(self,
                  neurons: int,
                  activation: Operation = Sigmoid()):

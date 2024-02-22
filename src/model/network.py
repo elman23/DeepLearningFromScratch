@@ -1,18 +1,16 @@
-import numpy as np
-from numpy import ndarray
-
 from typing import List
 
-from model.utils import assert_same_shape
 from model.layer import Layer
 from model.loss import Loss
+from numpy import ndarray
 
 
 class NeuralNetwork(object):
     '''
     The class for a neural network.
     '''
-    def __init__(self, 
+
+    def __init__(self,
                  layers: List[Layer],
                  loss: Loss,
                  seed: int = 1) -> None:
@@ -24,7 +22,7 @@ class NeuralNetwork(object):
         self.seed = seed
         if seed:
             for layer in self.layers:
-                setattr(layer, "seed", self.seed)        
+                setattr(layer, "seed", self.seed)
 
     def forward(self, x_batch: ndarray) -> ndarray:
         '''
@@ -55,7 +53,7 @@ class NeuralNetwork(object):
         Computes the loss.
         Passes data backward through the layers.
         '''
-        
+
         predictions = self.forward(x_batch)
 
         loss = self.loss.forward(predictions, y_batch)
@@ -63,7 +61,7 @@ class NeuralNetwork(object):
         self.backward(self.loss.backward())
 
         return loss
-    
+
     def params(self):
         '''
         Gets the parameters for the network.
@@ -76,4 +74,4 @@ class NeuralNetwork(object):
         Gets the gradient of the loss with respect to the parameters for the network.
         '''
         for layer in self.layers:
-            yield from layer.param_grads    
+            yield from layer.param_grads

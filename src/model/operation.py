@@ -1,14 +1,13 @@
 import numpy as np
+from model.utils import assert_same_shape
 from numpy import ndarray
 
-from typing import List
-
-from model.utils import assert_same_shape
 
 class Operation(object):
     '''
     Base class for an "operation" in a neural network.
     '''
+
     def __init__(self):
         pass
 
@@ -23,7 +22,6 @@ class Operation(object):
 
         return self.output
 
-
     def backward(self, output_grad: ndarray) -> ndarray:
         '''
         Calls the self._input_grad() function.
@@ -36,20 +34,18 @@ class Operation(object):
         assert_same_shape(self.input_, self.input_grad)
         return self.input_grad
 
-
     def _output(self) -> ndarray:
         '''
         The _output method must be defined for each Operation
         '''
         raise NotImplementedError()
 
-
     def _input_grad(self, output_grad: ndarray) -> ndarray:
         '''
         The _input_grad method must be defined for each Operation
         '''
         raise NotImplementedError()
-    
+
 
 class ParamOperation(Operation):
     '''
@@ -84,8 +80,8 @@ class ParamOperation(Operation):
         Every subclass of ParamOperation must implement _param_grad.
         '''
         raise NotImplementedError()
-    
-    
+
+
 class WeightMultiply(ParamOperation):
     '''
     Weight multiplication operation for a neural network.
@@ -109,13 +105,13 @@ class WeightMultiply(ParamOperation):
         '''
         return np.dot(output_grad, np.transpose(self.param, (1, 0)))
 
-    def _param_grad(self, output_grad: ndarray)  -> ndarray:
+    def _param_grad(self, output_grad: ndarray) -> ndarray:
         '''
         Compute parameter gradient.
-        '''        
+        '''
         return np.dot(np.transpose(self.input_, (1, 0)), output_grad)
-    
-    
+
+
 class BiasAdd(ParamOperation):
     '''
     Compute bias addition.
@@ -128,7 +124,7 @@ class BiasAdd(ParamOperation):
         Check appropriate shape.
         '''
         assert B.shape[0] == 1
-        
+
         super().__init__(B)
 
     def _output(self) -> ndarray:
@@ -149,8 +145,8 @@ class BiasAdd(ParamOperation):
         '''
         param_grad = np.ones_like(self.param) * output_grad
         return np.sum(param_grad, axis=0).reshape(1, param_grad.shape[1])
-    
-    
+
+
 class Sigmoid(Operation):
     '''
     Sigmoid activation function.
@@ -164,7 +160,7 @@ class Sigmoid(Operation):
         '''
         Compute output.
         '''
-        return 1.0/(1.0+np.exp(-1.0 * self.input_))
+        return 1.0 / (1.0 + np.exp(-1.0 * self.input_))
 
     def _input_grad(self, output_grad: ndarray) -> ndarray:
         '''
@@ -173,15 +169,15 @@ class Sigmoid(Operation):
         sigmoid_backward = self.output * (1.0 - self.output)
         input_grad = sigmoid_backward * output_grad
         return input_grad
-    
-    
+
+
 class Linear(Operation):
     '''
     "Identity" activation function
     '''
 
     def __init__(self) -> None:
-        '''Pass'''        
+        '''Pass'''
         super().__init__()
 
     def _output(self) -> ndarray:

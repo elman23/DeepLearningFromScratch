@@ -4,13 +4,13 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-from model.layer import Dense
-from model.loss import MeanSquaredError
+from model.layers import Dense
+from model.losses import MeanSquaredError
 from model.metrics import eval_regression_model
-from model.network import NeuralNetwork
-from model.operation import Sigmoid, Linear
-from model.optimizer import SGD
-from model.trainer import Trainer
+from model.networks import NeuralNetwork
+from model.operations import Sigmoid, Linear
+from model.optimizers import SGD
+from model.trainers import Trainer
 
 
 def main():

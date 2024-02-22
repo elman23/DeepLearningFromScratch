@@ -21,3 +21,39 @@ This will cause Python to search this path for a module called `lincoln` when yo
 ### Chapter 5: Numpy Convolution Demos
 
 While I don't spend much time delving into the details in the main text of the book, I have implemented the batch, multi-channel convolution operation in pure Numpy (I do describe how to do this and share the code in the book's Appendix). In [this notebook](05_convolutions/Numpy_Convolution_Demos.ipynb), I demonstrate using this operation to train a single layer CNN from scratch in pure Numpy to get over 90% accuracy on MNIST.
+
+
+## Overview
+
+```
+Operation --> Layer --> Network
+		      Loss  --/	
+```
+
+```
+operation
+---
+
+- Operation
+	- forward --> _output
+	- backward --> _input_grad
+	- _output
+	- _input_grad
+- ParamOperation(Operation)
+	- backward --> _input_grad, _param_grad
+	- _param_grad
+- WeightMultiply(ParamOperation)
+	- _output --> np.dot(self.input_, self.param)
+	- _input_grad --> np.dot(output_grad, np.transpose(self.param, (1, 0)))
+	- _param_grad --> np.dot(np.transpose(self.input_, (1, 0)), output_grad)
+- BiasAdd
+	- _output --> self._input + self.param
+	- _input_grad --> np.ones_like(self.input_) * output_grad
+	- _param_grad --> np.sum(np.ones_like(self.param) * output_grad, axis=0).reshape(1, param_grad.shape[1])
+- Sigmoid
+	- _output --> 1.0 / (1.0 + np.exp(-1.0 * self.input_))
+	- _input_grad --> (self.output * (1.0 - self.output)) * output_grad
+- Linear
+	- _output --> self.input_
+	- _input_grad --> output_grad
+```

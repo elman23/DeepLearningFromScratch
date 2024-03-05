@@ -14,7 +14,7 @@ class Optimizer(object):
         '''
         Every optimizer must implement the "step" function.
         '''
-        pass
+        raise NotImplementedError()
 
 
 class SGD(Optimizer):

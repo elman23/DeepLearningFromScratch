@@ -1,7 +1,7 @@
 from typing import List
 
-from model.layer import Layer
-from model.loss import Loss
+from model.layers import Layer
+from model.losses import Loss
 from numpy import ndarray
 
 

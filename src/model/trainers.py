@@ -2,8 +2,8 @@ from copy import deepcopy
 from typing import Tuple
 
 import numpy as np
-from model.network import NeuralNetwork
-from model.optimizer import Optimizer
+from model.networks import NeuralNetwork
+from model.optimizers import Optimizer
 from model.utils import permute_data
 from numpy import ndarray
 

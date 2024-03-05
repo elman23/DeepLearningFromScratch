@@ -5,7 +5,7 @@ from numpy import ndarray
 
 class Loss(object):
     '''
-    The "loss" of a neural network
+    The loss function of a neural network.
     '''
 
     def __init__(self):
@@ -14,7 +14,7 @@ class Loss(object):
 
     def forward(self, prediction: ndarray, target: ndarray) -> float:
         '''
-        Computes the actual loss value
+        Computes the actual loss value.
         '''
         assert_same_shape(prediction, target)
 
@@ -51,15 +51,17 @@ class Loss(object):
 class MeanSquaredError(Loss):
 
     def __init__(self) -> None:
-        '''Pass'''
         super().__init__()
 
     def _output(self) -> float:
         '''
-        Computes the per-observation squared error loss
+        Computes the per-observation squared error loss.
         '''
         loss = (
-                np.sum(np.power(self.prediction - self.target, 2)) /
+                np.sum(
+                    np.power(self.prediction - self.target, 2)
+                    ) 
+                / 
                 self.prediction.shape[0]
         )
 
@@ -67,7 +69,7 @@ class MeanSquaredError(Loss):
 
     def _input_grad(self) -> ndarray:
         '''
-        Computes the loss gradient with respect to the input for MSE loss
+        Computes the loss gradient with respect to the input for MSE loss.
         '''
 
         return 2.0 * (self.prediction - self.target) / self.prediction.shape[0]

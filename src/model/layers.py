@@ -1,7 +1,7 @@
 from typing import List
 
 import numpy as np
-from model.operation import Operation, ParamOperation, Sigmoid, WeightMultiply, BiasAdd
+from model.operations import Operation, ParamOperation, Sigmoid, WeightMultiply, BiasAdd
 from model.utils import assert_same_shape
 from numpy import ndarray
 

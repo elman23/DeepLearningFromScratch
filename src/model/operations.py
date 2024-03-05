@@ -13,13 +13,14 @@ class Operation(object):
 
     def forward(self, input_: ndarray):
         '''
-        Stores input in the self._input instance variable
+        Stores input in the self._input instance variable.
         Calls the self._output() function.
         '''
+        
         self.input_ = input_
-
+        
         self.output = self._output()
-
+        
         return self.output
 
     def backward(self, output_grad: ndarray) -> ndarray:
@@ -27,22 +28,24 @@ class Operation(object):
         Calls the self._input_grad() function.
         Checks that the appropriate shapes match.
         '''
+        
         assert_same_shape(self.output, output_grad)
-
+        
         self.input_grad = self._input_grad(output_grad)
-
+        
         assert_same_shape(self.input_, self.input_grad)
+        
         return self.input_grad
 
     def _output(self) -> ndarray:
         '''
-        The _output method must be defined for each Operation
+        The _output method must be defined by each Operation.
         '''
         raise NotImplementedError()
 
     def _input_grad(self, output_grad: ndarray) -> ndarray:
         '''
-        The _input_grad method must be defined for each Operation
+        The _input_grad method must be defined by each Operation.
         '''
         raise NotImplementedError()
 
@@ -54,7 +57,7 @@ class ParamOperation(Operation):
 
     def __init__(self, param: ndarray) -> ndarray:
         '''
-        The ParamOperation method
+        The ParamOperation method.
         '''
         super().__init__()
         self.param = param
@@ -91,7 +94,7 @@ class WeightMultiply(ParamOperation):
         '''
         Initialize Operation with self.param = W.
         '''
-        super().__init__(W)
+        super().__init__(param=W)
 
     def _output(self) -> ndarray:
         '''
@@ -173,7 +176,7 @@ class Sigmoid(Operation):
 
 class Linear(Operation):
     '''
-    "Identity" activation function
+    "Identity" activation function.
     '''
 
     def __init__(self) -> None:

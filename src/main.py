@@ -14,32 +14,26 @@ from model.trainers import Trainer
 
 
 def main():
-    lr = NeuralNetwork(
-        layers=[Dense(neurons=1,
-                      activation=Linear())],
-        loss=MeanSquaredError(),
-        seed=20190501
-    )
+    lr = NeuralNetwork(layers=[Dense(neurons=1,
+                                     activation=Linear())],
+                       loss=MeanSquaredError(),
+                       seed=20240304)
 
-    nn = NeuralNetwork(
-        layers=[Dense(neurons=13,
-                      activation=Sigmoid()),
-                Dense(neurons=1,
-                      activation=Linear())],
-        loss=MeanSquaredError(),
-        seed=20190501
-    )
+    nn = NeuralNetwork(layers=[Dense(neurons=13,
+                                     activation=Sigmoid()),
+                               Dense(neurons=1,
+                                     activation=Linear())],
+                       loss=MeanSquaredError(),
+                       seed=20240304)
 
-    dl = NeuralNetwork(
-        layers=[Dense(neurons=13,
-                      activation=Sigmoid()),
-                Dense(neurons=13,
-                      activation=Sigmoid()),
-                Dense(neurons=1,
-                      activation=Linear())],
-        loss=MeanSquaredError(),
-        seed=20190501
-    )
+    dl = NeuralNetwork(layers=[Dense(neurons=13,
+                                     activation=Sigmoid()),
+                               Dense(neurons=13,
+                                     activation=Sigmoid()),
+                               Dense(neurons=1,
+                                     activation=Linear())],
+                       loss=MeanSquaredError(),
+                       seed=20240304)
 
     california = fetch_california_housing()
     data = california.data
@@ -53,7 +47,7 @@ def main():
     def to_2d_np(a: ndarray,
                  type: str = "col") -> ndarray:
         '''
-        Turns a 1D Tensor into 2D
+        Turns a 1D tensor into 2D
         '''
 
         assert a.ndim == 1, \
@@ -68,12 +62,6 @@ def main():
 
     # make target 2d array
     y_train, y_test = to_2d_np(y_train), to_2d_np(y_test)
-
-    # helper function
-
-    def permute_data(X, y):
-        perm = np.random.permutation(X.shape[0])
-        return X[perm], y[perm]
 
     trainer = Trainer(lr, SGD(lr=0.01))
 

@@ -16,3 +16,10 @@
 .venv/
 .virtual_documents/
 
+.idea/
+.ipython/
+.jupyter/
+.local/
+.npm/
+.ssh/
+.vscode-server/

@@ -6,6 +6,7 @@
 *.so
 *.o
 *.txt
+*.gz 
 
 *data/*
 *.pkl*

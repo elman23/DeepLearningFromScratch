@@ -25,7 +25,7 @@ class Sigmoid(Operation):
         super().__init__()
 
     def _output(self, inference: bool) -> ndarray:
-        return 1.0/(1.0+np.exp(-1.0 * self.input_))
+        return 1.0 / (1.0 + np.exp(-1.0 * self.input_))
 
     def _input_grad(self, output_grad: ndarray) -> ndarray:
         sigmoid_backward = self.output * (1.0 - self.output)
@@ -35,7 +35,7 @@ class Sigmoid(Operation):
 
 class Tanh(Operation):
     '''
-    Hyperbolic tangent activation function
+    Hyperbolic tangent (Tanh) activation function
     '''
     def __init__(self) -> None:
         super().__init__()
@@ -44,13 +44,12 @@ class Tanh(Operation):
         return np.tanh(self.input_)
 
     def _input_grad(self, output_grad: ndarray) -> ndarray:
-
         return output_grad * (1 - self.output * self.output)
 
 
 class ReLU(Operation):
     '''
-    Hyperbolic tangent activation function
+    Rectified Linear Unit (ReLU) activation function
     '''
     def __init__(self) -> None:
         super().__init__()
@@ -59,6 +58,5 @@ class ReLU(Operation):
         return np.clip(self.input_, 0, None)
 
     def _input_grad(self, output_grad: ndarray) -> ndarray:
-
         mask = self.output >= 0
         return output_grad * mask

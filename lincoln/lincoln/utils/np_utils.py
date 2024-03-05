@@ -73,3 +73,28 @@ def assert_dim(t: np.ndarray,
 
 def softmax(x, axis=None):
     return np.exp(x - logsumexp(x, axis=axis, keepdims=True))
+
+
+def exp_ratios(ps):
+    '''
+    Helper function for softmax cross entropy loss
+    '''
+
+    b = np.zeros_like(ps, dtype=float)
+    for i in range(len(ps)):
+        temp = np.delete(ps, i) # p1, p3
+        s = np.array([np.exp(t) for t in temp]).sum() # sum of exps
+        b[i] = s # set to b
+        # b[0] = e^p1 + e^p2
+        # b[1] = e^p0 + e^p2
+
+    c = np.zeros((ps.shape[0], ps.shape[0])) # for p1, all the other values
+    for i in range(len(ps)): # SCE subscript
+        for j in range(len(ps)): # p subscript
+            try:
+                # print(ps[i], b[j])
+                c[i][j] = 1 - (np.exp(ps[i]) / b[j]) # e.g. for 2, 1 - (p1 / (e^p1 + e^p3))
+            except:
+                print(ps[i])
+
+    return c

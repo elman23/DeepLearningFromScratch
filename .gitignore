@@ -24,3 +24,5 @@
 .npm/
 .ssh/
 .vscode-server/
+
+mnist_data/

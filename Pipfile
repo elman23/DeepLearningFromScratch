@@ -11,6 +11,7 @@ pandas = "*"
 torch = "*"
 exceptiongroup = "*"
 torchvision = "*"
+seaborn = "*"
 
 [dev-packages]
 ipykernel = "*"
